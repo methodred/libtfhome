@@ -1,32 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvanderh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 23:29:56 by lvanderh          #+#    #+#             */
-/*   Updated: 2024/10/28 17:46:33 by lvanderh         ###   ########.fr       */
+/*   Created: 2024/10/28 17:48:11 by lvanderh          #+#    #+#             */
+/*   Updated: 2024/10/28 21:38:21 by lvanderh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+char	*ft_strtrim(char const *s1, char const *set)
 {
-	if (n == -2147483648)
-		write (fd, "-2147483648", 11);
-	else if (n < 0)
-	{
-		ft_putchar_fd('-', fd);
-		n = -n;
-		ft_putnbr_fd(n, fd);
-	}
-	else if (n > 9)
-	{
-		ft_putnbr_fd(n / 10, fd);
-		ft_putnbr_fd(n % 10, fd);
-	}
-	else
-		ft_putchar_fd(n + '0', fd);
+	size_t	j;
+	size_t	i;
+
+	i = 0;
+	if(!s1)
+		return (NULL);
+	while (s1[i] && ft_strchr(set, s1[i]))
+		i++;
+	j = ft_strlen(s1);
+	while (ft_strrchr(set, s1[j]))
+		j--;
+	return (ft_substr(s1, i, j - i + 1));
 }
+/*
+#include <stdio.h>
+int	main(void)
+{
+	printf("%s\n", ft_strtrim("          abcdefg  ", " "));
+	
+}*/
